@@ -8,35 +8,33 @@ const initialState = {
   error: null,
 };
 
+const handlePending = (state) => {
+  state.loading = true;
+  state.error = null;
+};
+
+const handleRejected = (state, { payload }) => {
+  state.loading = false;
+  state.error = payload;
+};
+
 const contactsSlice = createSlice({
   name: "contacts",
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(fetchContacts.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
+      .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.fulfilled, (state, { payload }) => {
         state.items = payload;
         state.loading = false;
       })
-      .addCase(fetchContacts.rejected, (state, { payload }) => {
-        state.loading = false;
-        state.error = payload;
-      })
-      .addCase(deleteContacts.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
+      .addCase(fetchContacts.rejected, handleRejected)
+      .addCase(deleteContacts.pending, handlePending)
       .addCase(deleteContacts.fulfilled, (state, { payload }) => {
         state.items = state.items.filter((item) => item.id !== payload.id);
         state.loading = false;
       })
-      .addCase(deleteContacts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
+      .addCase(deleteContacts.rejected, handleRejected)
       .addCase(addContacts.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -45,9 +43,9 @@ const contactsSlice = createSlice({
         state.items.push(payload);
         state.loading = false;
       })
-      .addCase(addContacts.rejected, (state, action) => {
+      .addCase(addContacts.rejected, (state, { payload }) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = payload;
       });
   },
 });

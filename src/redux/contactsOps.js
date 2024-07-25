@@ -23,7 +23,8 @@ export const deleteContacts = createAsyncThunk(
       const response = await axios.delete(`/contacts/${id}`);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      const errorMessage = error.response?.data?.message ?? error.message;
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );
@@ -35,7 +36,8 @@ export const addContacts = createAsyncThunk(
       const response = await axios.post(`/contacts`, contact);
       return response.data;
     } catch (error) {
-      thunkAPI.rejectWithValue(error.message);
+      const errorMessage = error.response?.data?.message ?? error.message;
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );

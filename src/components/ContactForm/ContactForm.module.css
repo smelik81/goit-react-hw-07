@@ -6,7 +6,7 @@
   padding: 20px;
   border: 1px solid black;
   margin-bottom: 20px;
-  background-color: white;
+  /*   background-color: white; */
 }
 
 .container {
@@ -39,6 +39,10 @@
   background-color: #b1acac73;
   display: block;
   margin: 0 auto;
+}
+
+.formButton:hover {
+  transform: scale(1.05);
 }
 
 span {

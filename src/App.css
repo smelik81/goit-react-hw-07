@@ -40,3 +40,52 @@
 .read-the-docs {
   color: #888;
 }
+
+.app {
+  font-family: Arial, sans-serif;
+  padding: 30px;
+  position: relative;
+}
+
+.app.light {
+  background-color: white;
+  color: black;
+}
+
+.app.light .content {
+  background-color: #f9f9f9;
+  color: black;
+}
+
+.app.dark {
+  background-color: black;
+  color: white;
+}
+
+.app.dark .content {
+  background-color: #333;
+  color: white;
+}
+
+.app.dark label,
+svg {
+  color: #d85f5f;
+}
+
+button {
+  margin-bottom: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.content {
+  padding: 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.toggleContainer {
+  position: absolute;
+  top: 0;
+  right: 20px;
+}

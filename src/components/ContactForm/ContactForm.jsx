@@ -1,10 +1,9 @@
 import css from "./ContactForm.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { nanoid } from "nanoid";
 import * as Yup from "yup";
 import InputMask from "react-input-mask";
 import { useDispatch } from "react-redux";
-import { useRef } from "react";
+import { useId, useRef } from "react";
 import { addContacts } from "../../redux/contactsOps";
 
 const validationInputSchema = Yup.object().shape({
@@ -26,15 +25,18 @@ const InputWithMask = ({ field, ...props }) => {
 };
 
 export default function ContactForm() {
+  const nameFormId = useId();
+  const numberFormId = useId();
+
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    const newUser = {
-      id: nanoid(),
-      ...values,
-      // хоча можно і так name:values.name,number:values.number,
-    };
-    dispatch(addContacts(newUser));
+    dispatch(
+      addContacts({
+        name: values.name,
+        number: values.number,
+      })
+    );
     actions.resetForm();
   };
 
@@ -46,13 +48,27 @@ export default function ContactForm() {
     >
       <Form className={css.formWrapper}>
         <div className={css.container}>
-          <label className={css.label}>Name</label>
-          <Field className={css.input} type="text" name="name" />
+          <label className={css.label} htmlFor={nameFormId}>
+            Name
+          </label>
+          <Field
+            className={css.input}
+            id={nameFormId}
+            type="text"
+            name="name"
+          />
           <ErrorMessage name="name" component="span" />
         </div>
         <div className={css.container}>
-          <label className={css.label}>Number</label>
-          <Field className={css.input} type="number" name="number">
+          <label className={css.label} htmlFor={numberFormId}>
+            Number
+          </label>
+          <Field
+            className={css.input}
+            id={numberFormId}
+            type="number"
+            name="number"
+          >
             {({ field }) => (
               <InputWithMask
                 className={css.inputMask}
